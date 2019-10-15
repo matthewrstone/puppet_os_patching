@@ -59,6 +59,20 @@ else
       data['missing_update_kbs'] = kblist
       data
     end
+    
+    chunk(:choco_outdated_packages) do
+      data = {}
+      chocolist = []
+      chocofile = os_patching_dir + '/outdated_choco_packages'
+      if File.file?(chocofile) && !File.zero?(chocofile)
+        chocopkgs = File.open(chocofile, 'r').read
+        chocopkgs.each_line do |line|
+          chocolist.push line.chomp
+        end
+      end
+      data['outdated_choco_packages'] = chocolist
+      data
+    end
 
     chunk(:secupdates) do
       data = {}
